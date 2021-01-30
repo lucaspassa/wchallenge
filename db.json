@@ -2,11 +2,15 @@
   "users": [
     {
       "id": 1,
-      "name": "Sabrina, Lopez"
+      "username" : "slopez",
+      "name": "Sabrina, Lopez",
+      "email": "slopez@gmail.com"
     },
     {
       "id": 2,
-      "name": "Franco, García"
+      "username": "fgarcia",
+      "name": "Franco, García",
+      "email": "fgarcia@gmail.com"
     }
   ],
   "posts": [
