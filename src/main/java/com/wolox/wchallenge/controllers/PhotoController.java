@@ -1,6 +1,7 @@
 package com.wolox.wchallenge.controllers;
 
 import com.wolox.wchallenge.ApiConfig;
+import com.wolox.wchallenge.models.Photo;
 import com.wolox.wchallenge.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -17,29 +18,27 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/users")
-public class UserController {
+@RequestMapping(value = "/photos")
+public class PhotoController {
 
     @Autowired
     private RestTemplate restTemplate;
-
     @Autowired
     private ApiConfig apiConfig;
 
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<User>> getUsers() {
-        ResponseEntity<List<User>> response = restTemplate.exchange(apiConfig.getUSERS_PATH(), HttpMethod.GET, null,
-                new ParameterizedTypeReference<List<User>>() {
+    public ResponseEntity<List<Photo>> getPhotos() {
+        ResponseEntity<List<Photo>> response = restTemplate.exchange("https://jsonplaceholder.typicode.com/photos", HttpMethod.GET, null,
+                new ParameterizedTypeReference<List<Photo>>() {
                 });
-        List<User> users = response.getBody();
-        return new ResponseEntity<>(users, HttpStatus.OK);
+        return new ResponseEntity<>(response.getBody(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/{ID}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> getUser(@PathVariable(value = "ID") int id) {
+    public ResponseEntity<Object> getPhoto(@PathVariable(value = "ID") int id) {
 
-        ResponseEntity<User> response = restTemplate.exchange(apiConfig.getUSERS_PATH() + "/" + id, HttpMethod.GET, null,
-                new ParameterizedTypeReference<User>() {
+        ResponseEntity<Photo> response = restTemplate.exchange(apiConfig.getPHOTOS_PATH() + "/" + id, HttpMethod.GET, null,
+                new ParameterizedTypeReference<Photo>() {
                 });
         return new ResponseEntity<>(response.getBody(), HttpStatus.OK);
     }
