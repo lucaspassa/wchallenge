@@ -1,11 +1,18 @@
 {
+  "users": [
+    {
+      "id": 1,
+      "name": "Sabrina, Lopez"
+    },
+    {
+      "id": 2,
+      "name": "Franco, García"
+    }
+  ],
   "posts": [
     {
       "id": 1,
       "title": "hello"
     }
-  ],
-  "profile": {
-    "name": "typicode"
-  }
+  ]
 }
