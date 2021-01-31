@@ -5,16 +5,16 @@ https://jsonplaceholder.typicode.com
 
 ## Api wchallenge
 
-### Todos los usuarios
+### Los usuarios
 /users
-### Obtener albums por id de usuario
-/users/{ID}/albums
-### Obtener fotos por id de usuario
-/users/{ID}/photos
-### Todas las fotos
+### Las fotos
 /photos
-### Todas las albums
+### Los albums
 /albums
+### Los albums por usuario
+/users/{USER_ID}/albums
+### Las fotos de un usuario
+/users/{USER_ID}/photos
 
 ## Gestión de permisos (Lectura / Escritura)
 - Registrar album compartido con usuario y permiso

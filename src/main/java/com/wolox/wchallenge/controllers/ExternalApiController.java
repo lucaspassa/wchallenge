@@ -34,17 +34,8 @@ public class ExternalApiController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @GetMapping(value = ApiConfig.USERS_PATH + "/{ID}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> getUser(@PathVariable(value = "ID") String id) {
-
-        ResponseEntity<User> response = restTemplate.exchange(apiConfig.getUserBasePath() + "/" + id, HttpMethod.GET, null,
-                new ParameterizedTypeReference<User>() {
-                });
-        return new ResponseEntity<>(response.getBody(), HttpStatus.OK);
-    }
-
-    @GetMapping(value = ApiConfig.USERS_PATH + "/{ID}" + ApiConfig.ALBUMS_PATH, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> getAlbumsByUser(@PathVariable(value = "ID") String userId) {
+    @GetMapping(value = ApiConfig.USERS_PATH + "/{USER_ID}" + ApiConfig.ALBUMS_PATH, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> getAlbumsByUser(@PathVariable(value = "USER_ID") String userId) {
 
         ResponseEntity<List<Album>> response = restTemplate.exchange(apiConfig.getAlbumsByUserPath(userId), HttpMethod.GET, null,
                 new ParameterizedTypeReference<List<Album>>() {
@@ -52,8 +43,8 @@ public class ExternalApiController {
         return new ResponseEntity<>(response.getBody(), HttpStatus.OK);
     }
 
-    @GetMapping(value = ApiConfig.USERS_PATH + "/{ID}" + ApiConfig.PHOTOS_PATH, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> getPhotosByUser(@PathVariable(value = "ID") String userId) {
+    @GetMapping(value = ApiConfig.USERS_PATH + "/{USER_ID}" + ApiConfig.PHOTOS_PATH, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> getPhotosByUser(@PathVariable(value = "USER_ID") String userId) {
 
         ResponseEntity<List<Photo>> response = restTemplate.exchange(apiConfig.getPhotosByUserPath(userId), HttpMethod.GET, null,
                 new ParameterizedTypeReference<List<Photo>>() {
