@@ -15,3 +15,8 @@ https://jsonplaceholder.typicode.com
 /photos
 ### Todas las albums
 /albums
+
+## Gestión de permisos (Lectura / Escritura)
+- Registrar album compartido con usuario y permiso
+- Cambiar permisos de un usuario para un album
+- Traer todos los usuarios que tienen un permiso determinado respecto a un álbum específico

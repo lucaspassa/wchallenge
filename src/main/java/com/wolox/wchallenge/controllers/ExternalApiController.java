@@ -18,7 +18,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 @RestController
-public class ApiExternalController {
+public class ExternalApiController {
     @Autowired
     private RestTemplate restTemplate;
 
