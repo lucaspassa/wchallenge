@@ -18,5 +18,10 @@ https://jsonplaceholder.typicode.com
 
 ## Gestión de permisos (Lectura / Escritura)
 - Registrar album compartido con usuario y permiso
+/permisssion
+  
 - Cambiar permisos de un usuario para un album
+/permission
+  
 - Traer todos los usuarios que tienen un permiso determinado respecto a un álbum específico
+/users/permission/{permiso}/albums/{albumId}

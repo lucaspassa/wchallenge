@@ -1,33 +1,37 @@
 package com.wolox.wchallenge;
 
+import com.wolox.wchallenge.models.UserAlbumPermission;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ApiConfig {
     public static final String API_EXTERNAL_BASE_PATH = "https://jsonplaceholder.typicode.com";
+    public static final String JSON_SERVER_PATH = "https://jsonplaceholder.typicode.com/lucaspassa/wchallenge";
     public static final String USERS_PATH = "/users";
     public static final String PHOTOS_PATH = "/photos";
     public static final String ALBUMS_PATH = "/albums";
+    public static final String PERMISSION_PATH = "/permission";
 
-    public String getUserBasePath() {
+    public String getExternalUserBasePath() {
         return API_EXTERNAL_BASE_PATH + USERS_PATH;
     }
 
-    public String getPhotosBasePath() {
+    public String getExternalPhotosBasePath() {
         return API_EXTERNAL_BASE_PATH + PHOTOS_PATH;
     }
 
-    public String getAlbumBasePath() {
+    public String getExternalAlbumBasePath() {
         return API_EXTERNAL_BASE_PATH + ALBUMS_PATH;
     }
 
-    public String getAlbumsByUserPath(String userId) {
+    public String getExternalAlbumsByUserPath(String userId) {
         return API_EXTERNAL_BASE_PATH + USERS_PATH
                 + "/" + userId + "/" + ALBUMS_PATH;
     }
 
-    public String getPhotosByUserPath(String userId) {
+    public String getExternalPhotosByUserPath(String userId) {
         return API_EXTERNAL_BASE_PATH + USERS_PATH
                 + "/" + userId + "/" + PHOTOS_PATH;
     }
+
 }
