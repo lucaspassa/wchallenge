@@ -1,10 +1,9 @@
-# wchallenge
+# WChallenge
 
-## Api externa 
-https://jsonplaceholder.typicode.com
+**Api Externa:** https://jsonplaceholder.typicode.com
 
-## Api wchallenge
-### Los usuarios
+## Api WChallenge
+### Todos los usuarios
 ```
 GET /users
 ```
@@ -12,15 +11,15 @@ GET /users
 ```
 GET /users/{ID}/albums
 ```
-### Las fotos de un usuario
+### Las fotos por usuario
 ```
 GET /users/{ID}/photos
 ```
-### Las fotos
+### Todas las fotos
 ```
 GET /photos
 ```
-### Los albums
+### Todos los albums
 ```
 GET /albums
 ```
@@ -29,8 +28,7 @@ GET /albums
 
 Permisos para aplicar sobre album y usuario
 ```
-Permission:
-READ
+READONLY
 READ_AND_WRITE
 ```
 Registrar album compartido con usuario y permiso
