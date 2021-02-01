@@ -27,7 +27,7 @@ public class SharedAlbumController {
     @Autowired
     private SharedAlbumService sharedAlbumService;
 
-    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "")
     public ResponseEntity<List<SharedAlbum>> getSharedAlbums() {
 
         List<SharedAlbum> sharedAlbums = sharedAlbumService.findAll();
