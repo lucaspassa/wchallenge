@@ -3,6 +3,8 @@ package com.wolox.wchallenge.controller;
 import com.wolox.wchallenge.ApiConfig;
 import com.wolox.wchallenge.model.*;
 import com.wolox.wchallenge.service.SharedAlbumService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -14,12 +16,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
 public class ExternalApiController {
+    private static final Logger logger = LoggerFactory.getLogger(ExternalApiController.class);
+
     @Autowired
     private RestTemplate restTemplate;
     @Autowired
@@ -27,17 +33,27 @@ public class ExternalApiController {
     @Autowired
     private SharedAlbumService sharedAlbumService;
 
-    @GetMapping(value = ApiConfig.USERS_PATH, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<User>> getUsers(@RequestParam(required = false) String albumId,
-                                               @RequestParam(required = false) Permission permission) {
+    @GetMapping(value = ApiConfig.USERS_PATH)
+    public ResponseEntity<List<User>> getUsers(@RequestParam String albumId,
+                                               @RequestParam String permissionValue) {
+
+        Permission permission;
+        try {
+            permission = Permission.valueOf(permissionValue);
+        } catch (IllegalArgumentException ex) {
+            String errorMessage = "Valor del permiso no encontrado: " + permissionValue;
+            errorMessage += (". Los valores posibles son: " + Arrays.asList(Permission.values()));
+            logger.info(errorMessage);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage());
+        }
 
 
-        if (albumId != null && !albumId.isEmpty() && permission != null) {
+        if (albumId != null && !albumId.isEmpty()) {
             List<SharedAlbum> sharedAlbumList = sharedAlbumService.findAll();
             List<User> userAlbumList = new ArrayList<>();
 
             for (SharedAlbum item : sharedAlbumList) {
-                if (item.getAlbumId().contains(albumId) && item.getPermission().equals(permission)) {
+                if (item.getAlbumId().equals(albumId) && item.getPermission().equals(permission)) {
 
                     ResponseEntity<User> responseUser = restTemplate.exchange(apiConfig.getExternalUserBasePath()
                                     + "/" + item.getUserId(), HttpMethod.GET, null,

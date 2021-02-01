@@ -43,10 +43,12 @@ public class SharedAlbumController {
     @PutMapping(value = "")
     public ResponseEntity<SharedAlbum> putSharedAlbums(@RequestBody SharedAlbum sharedAlbum){
         List<SharedAlbum> sharedAlbumList = sharedAlbumService.findAll();
+
         for (SharedAlbum item : sharedAlbumList) {
             if (item.getAlbumId().equals(sharedAlbum.getAlbumId())
                         && item.getUserId().equals(sharedAlbum.getUserId())){
                 item.setPermission(sharedAlbum.getPermission());
+
                 sharedAlbumService.save(item);
                 return new ResponseEntity<>(item, HttpStatus.OK);
             }

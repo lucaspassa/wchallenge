@@ -24,14 +24,13 @@ GET /photos
 GET /albums
 ```
 ### Todos los comentarios
-opcional filtro por contenido del atributo name
+Opcional filtro por contenido del atributo name
 ```
 GET /comments
 GET /comments?name={text}
 ```
 
 ## Gestión de permisos
-
 Permisos para aplicar sobre album y usuario
 ```
 READ
