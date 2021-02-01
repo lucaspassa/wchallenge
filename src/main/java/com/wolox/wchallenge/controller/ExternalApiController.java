@@ -34,8 +34,16 @@ public class ExternalApiController {
     private SharedAlbumService sharedAlbumService;
 
     @GetMapping(value = ApiConfig.USERS_PATH)
-    public ResponseEntity<List<User>> getUsers(@RequestParam String albumId,
-                                               @RequestParam String permissionValue) {
+    public ResponseEntity<List<User>> getUsers(@RequestParam(required = false) String albumId,
+                                               @RequestParam(required = false) String permissionValue) {
+
+        if (albumId == null && permissionValue == null) {
+            ResponseEntity<List<User>> response = restTemplate.exchange(apiConfig.getExternalUserBasePath(), HttpMethod.GET, null,
+                    new ParameterizedTypeReference<List<User>>() {
+                    });
+            List<User> users = response.getBody();
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        }
 
         Permission permission;
         try {
@@ -46,10 +54,9 @@ public class ExternalApiController {
             return new ResponseEntity(errorMessange, HttpStatus.BAD_REQUEST);
         }
 
-
+        List<User> userAlbumList = new ArrayList<>();
         if (albumId != null && !albumId.isEmpty()) {
             List<SharedAlbum> sharedAlbumList = sharedAlbumService.findAll();
-            List<User> userAlbumList = new ArrayList<>();
 
             for (SharedAlbum item : sharedAlbumList) {
                 if (item.getAlbumId().equals(albumId) && item.getPermission().equals(permission)) {
@@ -61,14 +68,8 @@ public class ExternalApiController {
                     userAlbumList.add(responseUser.getBody());
                 }
             }
-            return new ResponseEntity<>(userAlbumList, HttpStatus.OK);
         }
-
-        ResponseEntity<List<User>> response = restTemplate.exchange(apiConfig.getExternalUserBasePath(), HttpMethod.GET, null,
-                new ParameterizedTypeReference<List<User>>() {
-                });
-        List<User> users = response.getBody();
-        return new ResponseEntity<>(users, HttpStatus.OK);
+        return new ResponseEntity<>(userAlbumList, HttpStatus.OK);
     }
 
     @GetMapping(value = ApiConfig.USERS_PATH + "/{USER_ID}" + ApiConfig.ALBUMS_PATH, produces = MediaType.APPLICATION_JSON_VALUE)

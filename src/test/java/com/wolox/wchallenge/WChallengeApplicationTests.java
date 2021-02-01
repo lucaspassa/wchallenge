@@ -1,8 +1,10 @@
 package com.wolox.wchallenge;
 
 import com.wolox.wchallenge.controller.ExternalApiController;
-import com.wolox.wchallenge.model.Album;
-import com.wolox.wchallenge.model.Comment;
+import com.wolox.wchallenge.model.*;
+import com.wolox.wchallenge.repository.SharedAlbumRepository;
+import org.aspectj.lang.annotation.Before;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,10 +19,32 @@ class WChallengeApplicationTests {
 
 	@Autowired
 	private ExternalApiController externalApiController;
+	@Autowired
+	private SharedAlbumRepository sharedAlbumRepository;
+
+	public void setUp() {
+		sharedAlbumRepository.save(new SharedAlbum("1", "1", Permission.READ));
+		sharedAlbumRepository.save(new SharedAlbum("2", "1", Permission.READ_AND_WRITE));
+		sharedAlbumRepository.save(new SharedAlbum("3", "1", Permission.READ));
+		sharedAlbumRepository.save(new SharedAlbum("1", "2", Permission.READ));
+	}
 
 	@Test
 	void contextLoads() {
 		assertThat(externalApiController).isNotNull();
+		assertThat(sharedAlbumRepository).isNotNull();
+	}
+
+	@Test
+	void getUsersTest() {
+		setUp();
+		ResponseEntity<List<User>> users = externalApiController.getUsers(null, null);
+		assertThat(users).isNotNull();
+
+		ResponseEntity<List<User>> userSharedAlbumRead = externalApiController.getUsers("1", Permission.READ.name());
+		assertThat(userSharedAlbumRead).isNotNull();
+		List<User> userList = userSharedAlbumRead.getBody();
+		assertThat(userList.size() > 0).isEqualTo(true);
 	}
 
 	@Test

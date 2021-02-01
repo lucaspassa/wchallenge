@@ -20,6 +20,12 @@ public class SharedAlbum {
     public SharedAlbum() {
     }
 
+    public SharedAlbum(String userId, String albumId, Permission permission) {
+        this.userId = userId;
+        this.albumId = albumId;
+        this.permission = permission;
+    }
+
     public long getId() {
         return id;
     }
