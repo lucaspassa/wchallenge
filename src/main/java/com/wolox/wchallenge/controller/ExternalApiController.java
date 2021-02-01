@@ -1,10 +1,8 @@
 package com.wolox.wchallenge.controller;
 
 import com.wolox.wchallenge.ApiConfig;
-import com.wolox.wchallenge.model.Album;
-import com.wolox.wchallenge.model.Comment;
-import com.wolox.wchallenge.model.Photo;
-import com.wolox.wchallenge.model.User;
+import com.wolox.wchallenge.model.*;
+import com.wolox.wchallenge.service.SharedAlbumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -24,12 +22,33 @@ import java.util.List;
 public class ExternalApiController {
     @Autowired
     private RestTemplate restTemplate;
-
     @Autowired
     private ApiConfig apiConfig;
+    @Autowired
+    private SharedAlbumService sharedAlbumService;
 
     @GetMapping(value = ApiConfig.USERS_PATH, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<User>> getUsers() {
+    public ResponseEntity<List<User>> getUsers(@RequestParam(required = false) String albumId,
+                                               @RequestParam(required = false) Permission permission) {
+
+
+        if (albumId != null && !albumId.isEmpty() && permission != null) {
+            List<SharedAlbum> sharedAlbumList = sharedAlbumService.findAll();
+            List<User> userAlbumList = new ArrayList<>();
+
+            for (SharedAlbum item : sharedAlbumList) {
+                if (item.getAlbumId().contains(albumId) && item.getPermission().equals(permission)) {
+
+                    ResponseEntity<User> responseUser = restTemplate.exchange(apiConfig.getExternalUserBasePath()
+                                    + "/" + item.getUserId(), HttpMethod.GET, null,
+                            new ParameterizedTypeReference<User>() {
+                            });
+                    userAlbumList.add(responseUser.getBody());
+                }
+            }
+            return new ResponseEntity<>(userAlbumList, HttpStatus.OK);
+        }
+
         ResponseEntity<List<User>> response = restTemplate.exchange(apiConfig.getExternalUserBasePath(), HttpMethod.GET, null,
                 new ParameterizedTypeReference<List<User>>() {
                 });
