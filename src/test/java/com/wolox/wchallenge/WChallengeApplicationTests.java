@@ -1,6 +1,7 @@
 package com.wolox.wchallenge;
 
 import com.wolox.wchallenge.controller.ExternalApiController;
+import com.wolox.wchallenge.controller.SharedAlbumController;
 import com.wolox.wchallenge.model.*;
 import com.wolox.wchallenge.repository.SharedAlbumRepository;
 import org.aspectj.lang.annotation.Before;
@@ -20,6 +21,8 @@ class WChallengeApplicationTests {
 	@Autowired
 	private ExternalApiController externalApiController;
 	@Autowired
+	private SharedAlbumController sharedAlbumController;
+	@Autowired
 	private SharedAlbumRepository sharedAlbumRepository;
 
 	public void setUp() {
@@ -38,6 +41,7 @@ class WChallengeApplicationTests {
 	@Test
 	void getUsersTest() {
 		setUp();
+
 		ResponseEntity<List<User>> users = externalApiController.getUsers(null, null);
 		assertThat(users).isNotNull();
 
@@ -48,15 +52,27 @@ class WChallengeApplicationTests {
 	}
 
 	@Test
-	void getAlbumsTest() {
-		ResponseEntity<List<Album>> albums = externalApiController.getAlbums();
-		assertThat(albums).isNotNull();
-	}
-
-	@Test
 	void getAlbumsByUserTest() {
 		ResponseEntity<Object> albumsByUser = externalApiController.getAlbumsByUser("1");
 		assertThat(albumsByUser).isNotNull();
+	}
+
+	@Test
+	void getPhotosByUserTest() {
+		ResponseEntity<Object> objectResponseEntity = externalApiController.getPhotosByUser("1");
+		assertThat(objectResponseEntity).isNotNull();
+	}
+
+	@Test
+	void getPhotosTest() {
+		ResponseEntity<List<Photo>> photos = externalApiController.getPhotos();
+		assertThat(photos).isNotNull();
+	}
+
+	@Test
+	void getAlbumsTest() {
+		ResponseEntity<List<Album>> albums = externalApiController.getAlbums();
+		assertThat(albums).isNotNull();
 	}
 
 	@Test
@@ -72,6 +88,31 @@ class WChallengeApplicationTests {
 
 		List<Comment> resultsBody = commentsNoResults.getBody();
 		assertThat(resultsBody.size()).isEqualTo(0);
+	}
+
+	@Test
+	void getSharedAlbums() {
+		ResponseEntity<List<SharedAlbum>> sharedAlbums = sharedAlbumController.getSharedAlbums();
+		assertThat(sharedAlbums).isNotNull();
+	}
+
+	@Test
+	void getPostSharedAlbums() {
+		ResponseEntity<SharedAlbum> sharedAlbumResponseEntity = sharedAlbumController.postSharedAlbums(new SharedAlbum("2", "2", Permission.READ_AND_WRITE));
+		assertThat(sharedAlbumResponseEntity.getBody()).isNotNull();
+		assertThat(sharedAlbumResponseEntity.getBody().getId()).isNotNull();
+	}
+
+	@Test
+	void getPutSharedAlbums() {
+		ResponseEntity<SharedAlbum> sharedAlbumEntity = sharedAlbumController.postSharedAlbums(new SharedAlbum("3", "3", Permission.READ_AND_WRITE));
+		SharedAlbum sharedAlbumEntityBody = sharedAlbumEntity.getBody();
+		assertThat(sharedAlbumEntityBody).isNotNull();
+		assertThat(sharedAlbumEntityBody.getPermission().equals(Permission.READ_AND_WRITE)).isEqualTo(true);
+
+		ResponseEntity<SharedAlbum> sharedAlbumResponseEntity = sharedAlbumController.putSharedAlbums(new SharedAlbum("3", "3", Permission.READ));
+		SharedAlbum sharedAlbumResponseEntityBody = sharedAlbumResponseEntity.getBody();
+		assertThat(sharedAlbumResponseEntityBody.getPermission().equals(Permission.READ)).isEqualTo(true);
 	}
 
 }
