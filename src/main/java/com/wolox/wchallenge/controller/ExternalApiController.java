@@ -33,17 +33,17 @@ public class ExternalApiController {
     private SharedAlbumService sharedAlbumService;
 
     @GetMapping(value = ApiConfig.USERS_PATH)
-    public ResponseEntity<List<User>> getUsers(@RequestParam(required = false) String albumId,
-                                               @RequestParam(required = false) String permissionValue) {
+    public ResponseEntity<List<User>> getUsers() {
+        ResponseEntity<List<User>> response = restTemplate.exchange(apiConfig.getExternalUserBasePath(), HttpMethod.GET, null,
+                new ParameterizedTypeReference<List<User>>() {
+                });
+        List<User> users = response.getBody();
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
 
-        if (albumId == null && permissionValue == null) {
-            ResponseEntity<List<User>> response = restTemplate.exchange(apiConfig.getExternalUserBasePath(), HttpMethod.GET, null,
-                    new ParameterizedTypeReference<List<User>>() {
-                    });
-            List<User> users = response.getBody();
-            return new ResponseEntity<>(users, HttpStatus.OK);
-        }
-
+    @GetMapping(value = ApiConfig.USERS_PATH + ApiConfig.ALBUMS_PATH + "/{ALBUM_ID}/permissions/{PERMISSION_VALUE}")
+    public ResponseEntity<List<User>> getUsers(@PathVariable(value = "ALBUM_ID") String albumId,
+                                               @PathVariable(value = "PERMISSION_VALUE") String permissionValue) {
         Permission permission;
         try {
             permission = Permission.valueOf(permissionValue);

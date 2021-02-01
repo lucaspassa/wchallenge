@@ -42,7 +42,7 @@ class WChallengeApplicationTests {
 	void getUsersTest() {
 		setUp();
 
-		ResponseEntity<List<User>> users = externalApiController.getUsers(null, null);
+		ResponseEntity<List<User>> users = externalApiController.getUsers();
 		assertThat(users).isNotNull();
 
 		ResponseEntity<List<User>> userSharedAlbumRead = externalApiController.getUsers("1", Permission.READ.name());

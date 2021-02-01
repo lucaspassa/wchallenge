@@ -54,5 +54,5 @@ Ejemplo JSON:
 ```
 3) Traer todos los usuarios que tienen permiso determinado respecto a un albúm especifico
 ```
-GET /users?album={albumId}&permisson={permisson}
+GET /users/albums{albumId}/permission/{permissonValue}
 ```
