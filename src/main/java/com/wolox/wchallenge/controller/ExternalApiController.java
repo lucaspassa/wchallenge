@@ -41,10 +41,9 @@ public class ExternalApiController {
         try {
             permission = Permission.valueOf(permissionValue);
         } catch (IllegalArgumentException ex) {
-            String errorMessage = "Valor del permiso no encontrado: " + permissionValue;
-            errorMessage += (". Los valores posibles son: " + Arrays.asList(Permission.values()));
-            logger.info(errorMessage);
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage());
+            String errorMessange = "ERROR: El parámetro {permissionValue} con valor " + permissionValue +  " no es válido. " ;
+            errorMessange += "Los valores posibles son: " + Arrays.asList(Permission.values());
+            return new ResponseEntity(errorMessange, HttpStatus.BAD_REQUEST);
         }
 
 
