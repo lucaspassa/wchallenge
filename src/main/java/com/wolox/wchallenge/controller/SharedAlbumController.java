@@ -34,13 +34,13 @@ public class SharedAlbumController {
         return new ResponseEntity<>(sharedAlbums, HttpStatus.OK);
     }
 
-    @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "")
     public ResponseEntity<SharedAlbum> postSharedAlbums(@RequestBody SharedAlbum sharedAlbum){
         sharedAlbum = sharedAlbumService.save(sharedAlbum);
         return new ResponseEntity<>(sharedAlbum, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "")
     public ResponseEntity<SharedAlbum> putSharedAlbums(@RequestBody SharedAlbum sharedAlbum){
         sharedAlbum = sharedAlbumService.save(sharedAlbum);
         return new ResponseEntity<>(sharedAlbum, HttpStatus.OK);
