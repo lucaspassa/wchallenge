@@ -1,16 +1,14 @@
 package com.wolox.wchallenge;
 
-import com.wolox.wchallenge.models.UserAlbumPermission;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ApiConfig {
     public static final String API_EXTERNAL_BASE_PATH = "https://jsonplaceholder.typicode.com";
-    public static final String JSON_SERVER_PATH = "https://jsonplaceholder.typicode.com/lucaspassa/wchallenge";
     public static final String USERS_PATH = "/users";
     public static final String PHOTOS_PATH = "/photos";
     public static final String ALBUMS_PATH = "/albums";
-    public static final String PERMISSION_PATH = "/permission";
+    public static final String SHARED_ALBUMS_PATH = "/sharedalbums";
 
     public String getExternalUserBasePath() {
         return API_EXTERNAL_BASE_PATH + USERS_PATH;

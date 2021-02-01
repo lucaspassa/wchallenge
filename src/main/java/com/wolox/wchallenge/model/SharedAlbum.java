@@ -1,22 +1,30 @@
-package com.wolox.wchallenge.models;
+package com.wolox.wchallenge.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserAlbumPermission {
-    private String id;
+@Entity
+public class SharedAlbum {
+
+    @Id
+    @GeneratedValue
+    private Long id;
     private String userId;
     private String albumId;
     private Permission permission;
 
-    public UserAlbumPermission() {
+    public SharedAlbum() {
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -50,7 +58,6 @@ public class UserAlbumPermission {
                 "id='" + id + '\'' +
                 ", userId='" + userId + '\'' +
                 ", albumId='" + albumId + '\'' +
-                ", permission='" + permission + '\'' +
                 '}';
     }
 }

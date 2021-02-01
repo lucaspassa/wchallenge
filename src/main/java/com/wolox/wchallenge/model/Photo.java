@@ -1,4 +1,4 @@
-package com.wolox.wchallenge.models;
+package com.wolox.wchallenge.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

@@ -1,9 +1,9 @@
-package com.wolox.wchallenge.controllers;
+package com.wolox.wchallenge.controller;
 
 import com.wolox.wchallenge.ApiConfig;
-import com.wolox.wchallenge.models.Album;
-import com.wolox.wchallenge.models.Photo;
-import com.wolox.wchallenge.models.User;
+import com.wolox.wchallenge.model.Album;
+import com.wolox.wchallenge.model.Photo;
+import com.wolox.wchallenge.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
