@@ -28,7 +28,7 @@ GET /albums
 
 Permisos para aplicar sobre album y usuario
 ```
-READONLY
+READO
 READ_AND_WRITE
 ```
 Registrar album compartido con usuario y permiso
