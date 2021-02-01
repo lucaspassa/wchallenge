@@ -12,7 +12,7 @@ public class SharedAlbum {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private long id;
     private String userId;
     private String albumId;
     private Permission permission;
@@ -20,11 +20,11 @@ public class SharedAlbum {
     public SharedAlbum() {
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

@@ -3,13 +3,14 @@ package com.wolox.wchallenge.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class User {
+public class Comment {
     private long id;
-    private String username;
+    private String postId;
     private String name;
     private String email;
+    private String body;
 
-    public User() {
+    public Comment() {
     }
 
     public long getId() {
@@ -20,12 +21,12 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getPostId() {
+        return postId;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setPostId(String postId) {
+        this.postId = postId;
     }
 
     public String getName() {
@@ -44,13 +45,22 @@ public class User {
         this.email = email;
     }
 
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
     @Override
     public String toString() {
-        return "User{" +
-                "id='" + id + '\'' +
-                ", username='" + username + '\'' +
+        return "Comment{" +
+                "id=" + id +
+                ", postId='" + postId + '\'' +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
+                ", body='" + body + '\'' +
                 '}';
     }
 }

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Photo {
-    private String id;
+    private long id;
     private String albumId;
     private String title;
     private String url;
@@ -13,11 +13,11 @@ public class Photo {
     public Photo() {
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
