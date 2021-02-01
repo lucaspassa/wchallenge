@@ -4,24 +4,56 @@
 https://jsonplaceholder.typicode.com
 
 ## Api wchallenge
-
 ### Los usuarios
-/users
-### Las fotos
-/photos
-### Los albums
-/albums
+```
+GET /users
+```
 ### Los albums por usuario
-/users/{USER_ID}/albums
+```
+GET /users/{ID}/albums
+```
 ### Las fotos de un usuario
-/users/{USER_ID}/photos
+```
+GET /users/{ID}/photos
+```
+### Las fotos
+```
+GET /photos
+```
+### Los albums
+```
+GET /albums
+```
 
-## Gestión de permisos (Lectura / Escritura)
-- Registrar album compartido con usuario y permiso
-/permisssion
-  
-- Cambiar permisos de un usuario para un album
-/permission
-  
-- Traer todos los usuarios que tienen un permiso determinado respecto a un álbum específico
-/users/permission/{permiso}/albums/{albumId}
+## Gestión de permisos
+
+Permisos para aplicar sobre album y usuario
+```
+Permission:
+READ
+READ_AND_WRITE
+```
+Registrar album compartido con usuario y permiso
+```  
+POST /shared_albums
+```
+Ejemplo JSON:
+```
+{        
+    "userId": "1",
+    "albumId": "1",
+    "permission": "READ"
+}
+```
+Cambiar permisos de usuario para albúm determinado
+```
+PUT /shared_albums
+```
+Ejemplo JSON:
+```
+{        
+    "userId": "1",
+    "albumId": "1",
+    "permission": "READ_AND_WRITE"
+}
+```
