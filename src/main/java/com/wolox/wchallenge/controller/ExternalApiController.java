@@ -2,6 +2,7 @@ package com.wolox.wchallenge.controller;
 
 import com.wolox.wchallenge.ApiConfig;
 import com.wolox.wchallenge.model.Album;
+import com.wolox.wchallenge.model.Comment;
 import com.wolox.wchallenge.model.Photo;
 import com.wolox.wchallenge.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +13,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -66,5 +69,28 @@ public class ExternalApiController {
                 new ParameterizedTypeReference<List<Album>>() {
                 });
         return new ResponseEntity<>(response.getBody(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = ApiConfig.COMMENTS_PATH)
+    public ResponseEntity<List<Comment>> getComments(@RequestParam(required = false) String name) {
+        ResponseEntity<List<Comment>> response = restTemplate.exchange(apiConfig.getExternalCommentsPath(), HttpMethod.GET, null,
+                new ParameterizedTypeReference<List<Comment>>() {
+                });
+
+        List<Comment> commentList = response.getBody();
+
+        if (commentList != null && !commentList.isEmpty()
+                && name != null && !name.isEmpty()) {
+            List<Comment> comentsFilterByName = new ArrayList<>();
+            for (Comment item : commentList) {
+                if (item.getName() != null && !item.getName().isEmpty()
+                        && item.getName().contains(name)) {
+                        comentsFilterByName.add(item);
+                }
+            }
+            return new ResponseEntity<>(comentsFilterByName, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(commentList, HttpStatus.OK);
     }
 }

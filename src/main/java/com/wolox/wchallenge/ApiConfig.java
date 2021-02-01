@@ -33,4 +33,8 @@ public class ApiConfig {
                 + "/" + userId + "/" + PHOTOS_PATH;
     }
 
+    public String getExternalCommentsPath() {
+        return API_EXTERNAL_BASE_PATH + COMMENTS_PATH;
+    }
+
 }
